@@ -1,54 +1,14 @@
-            - name: Staticcheck
-  # You may pin to the exact commit or the version.
-  # uses: dominikh/staticcheck-action@fe1dd0c3658873b46f8c9bb3291096a617310ca6
-  uses: dominikh/staticcheck-action@v1.3.1
-  with:
-    # The version of Staticcheck to use. Because new versions of
-Staticcheck introduce new checks that may break your build, it
-is recommended to pin to a specific version and to update
-Staticheck consciously.
+name: "CI"
+on: ["push", "pull_request"]
 
-    version: # default is latest
-    # Minimum version of Go to support. This affects the diagnostics
-reported by Staticcheck, avoiding suggestions that are not
-applicable to older versions of Go.
-
-If unset, this will default to the Go version specified in your
-go.mod.
-
-See https://staticcheck.io/docs/running-staticcheck/cli/#go
-for more information.
-
-    min-go-version: # optional, default is module
-    # Build tags
-    build-tags: # optional
-    # Value to pass to Staticcheck in the -checks flag. This doesn't
-normally need to be set.
-
-    checks: # optional, default is inherit
-    # Let the action install the latest version of Go.
-If set to false, the action expects you to have installed Go already.
-The latest release of Staticcheck works with the last minor release of Go at that time.
-The action itself requires at least Go 1.16.
-
-    install-go: # default is true
-    # String to include in the cache key, in addition to the default, which is runner.os.
-This is useful when using multiple Go versions.
-
-    cache-key: # optional
-    # Relative path to the working directory Staticcheck should be executed in.
-This is useful when dealing with multiple projects within one repository.
-
-    working-directory: # optional, default is .
-    # Output format to use. This corresponds to Staticcheck's -f flag. Usually you will want to use the default
-("text"), as this format creates annotations on pull requests. When combining multiple runs with merge-files, you
-want to use the "binary" format on the individual runs to create the inputs to the merge run.
-
-    output-format: # optional, default is text
-    # File to write Staticcheck's output to. Defaults to stdout.
-
-    output-file: # optional
-    # A newline-separated list of files to pass to "staticcheck -merge".
-
-    merge-files: # optional
-          
+jobs:
+  ci:
+    name: "Run CI"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+    - uses: dominikh/staticcheck-action@v1
+      with:
+        version: "latest"
