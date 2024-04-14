@@ -5,7 +5,7 @@
    
   	Для запуска из-под localhost заменить yaml файл с конфиграцией, прописав в ней localhost
 # Стек
-  Go 1.22, Redis-alpine, potgreSQL-16, Docker, Goland-IDE
+  Go 1.22, Redis-alpine, potgreSQL-16, Docker, Goland-IDE, доступ по localhost:8080
 #  Команды внутри проекта
   	GET      получение баннера                  http://localhost:8080/user_banner?tag_id=8&feature_id=15&use_last_revision=true&admin_token=25
 	POST     внести пользователя                http://localhost:8080/set_admin?id=25&state=true
