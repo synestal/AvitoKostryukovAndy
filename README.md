@@ -1,7 +1,8 @@
 #  Основные функции и заметки по запуску:
-  	Docker:	docker-compose build;	docker-compose up -d
-  	Тест на прием (интеграционный), запуск из корня: cd app/test; go run initTests.go; cd..; cd..
-  	Линтер (параметры находятся в app\config), запуск из корня: cd app/cmd; go run analyser.go; cd..; cd..
+  	Docker:	docker-compose build;					docker-compose up -d
+  	Тест на прием (интеграционный), 				запуск из корня: cd app/test; go run initTests.go; cd..; cd..
+  	Линтер (параметры находятся в app\config), 			запуск из корня: cd app/cmd; go run analyser.go; cd..; cd..
+   
   	Для запуска из-под localhost заменить yaml файл с конфиграцией, прописав в ней localhost
 # Стек
   Go 1.22, Redis-alpine, potgreSQL-16, Docker, Goland-IDE
