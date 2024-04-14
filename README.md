@@ -1,5 +1,5 @@
 #  Основные функции и заметки по запуску:
-  	Docker:	docker-compose build;					docker-compose up -d
+  	Docker:								docker-compose build; docker-compose up -d
   	Тест на прием (интеграционный), 				запуск из корня: cd app/test; go run initTests.go; cd..; cd..
   	Линтер (параметры находятся в app\config), 			запуск из корня: cd app/cmd; go run analyser.go; cd..; cd..
    
