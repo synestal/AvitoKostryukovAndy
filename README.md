@@ -6,7 +6,7 @@
 # Стек
   Go 1.22, Redis-alpine, potgreSQL-16, Docker, Goland-IDE
 #  Команды внутри проекта
-  GET      получение баннера                  http://localhost:8080/user_banner?tag_id=8&feature_id=15&use_last_revision=true&admin_token=25
+  	GET      получение баннера                  http://localhost:8080/user_banner?tag_id=8&feature_id=15&use_last_revision=true&admin_token=25
 	POST     внести пользователя                http://localhost:8080/set_admin?id=25&state=true
 	POST     создать баннер                     http://localhost:8080/banner?admin_token=10&feature_id=15&tag_ids=22,12&content=notebooklovers,simpledescr,http://aboba.com&is_active=true
 	PATCH    изменить баннер                    http://localhost:8080/banner/{id}?admin_token=25&feature_id=100&tag_ids=100,101&content=avitolovers,descr,http://avito.com&is_active=true&id=3
