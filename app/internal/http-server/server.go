@@ -46,15 +46,15 @@ func (s *Server) Run() error {
 	app.postHandle = postHandle.New(app.post)
 	app.getHandle = getHandle.New(app.get)
 
-	s.Router.GET("/user_banner", app.getHandle.GetBannerHandler(s.Db, s.RedisClient))  // OK http://localhost:8080/user_banner?tag_id=8&feature_id=15&use_last_revision=true&admin_token=25
-	s.Router.POST("/set_admin", app.postHandle.PostAdminStateHandler(s.Db))            // OK http://localhost:8080/set_admin?id=25&state=true
-	s.Router.POST("/banner", app.postHandle.CreateNewBannerHandler(s.Db))              // OK http://localhost:8080/banner?admin_token=10&feature_id=15&tag_ids=22,12&content=notebooklovers,simpledescr,http://aboba.com&is_active=true
-	s.Router.PATCH("/banner/{id}", app.postHandle.ChangeBannerHandler(s.Db))           // OK http://localhost:8080/banner/{id}?admin_token=25&feature_id=100&tag_ids=100,101&content=avitolovers,descr,http://avito.com&is_active=true&id=3
-	s.Router.DELETE("/banner/{id}", app.postHandle.DeleteBannerHandler(s.Db))          // OK http://localhost:8080/banner/{id}?admin_token=10&id=3
-	s.Router.GET("/banner", app.getHandle.GetBannerByFilterHandler(s.Db))              // ОК http://localhost:8080/banner?admin_token=25&feature_id=15&tag_id=15&content=5&offset=0
-	s.Router.DELETE("/delete", app.postHandle.DeleteFeatureTagHandler(s.Db))           // ОК http://localhost:8080/delete?admin_token=25&feature_id=15 или http://localhost:8080/delete?admin_token=25&tag_id=15&content=1&offset=1
-	s.Router.GET("/gethistory", app.getHandle.GetBannersHistoryHandler(s.Db))          // ОК http://localhost:8080/gethistory?admin_token=25&id=15
-	s.Router.PATCH("/changehistory", app.postHandle.ChangeBannersHistoryHandler(s.Db)) // OK http://localhost:8080/changehistory?admin_token=25&id=15&number=8
+	s.Router.GET("/user_banner", app.getHandle.GetBannerHandler(s.Db, s.RedisClient)) // OK http://localhost:8080/user_banner?tag_id=8&feature_id=15&use_last_revision=true&admin_token=25
+	s.Router.POST("/set_admin", app.postHandle.PostAdminStateHandler(s.Db))           // OK http://localhost:8080/set_admin?id=25&state=true
+	s.Router.POST("/banner", app.postHandle.CreateNewBannerHandler(s.Db))             // OK http://localhost:8080/banner?admin_token=10&feature_id=15&tag_ids=22,12&content=notebooklovers,simpledescr,http://aboba.com&is_active=true
+	s.Router.PATCH("/banner/{id}", app.postHandle.ChangeBannerHandler(s.Db))          // OK http://localhost:8080/banner/{id}?admin_token=25&feature_id=100&tag_ids=100,101&content=avitolovers,descr,http://avito.com&is_active=true&id=3
+	s.Router.DELETE("/banner/{id}", app.postHandle.DeleteBannerHandler(s.Db))         // OK http://localhost:8080/banner/{id}?admin_token=10&id=3
+	s.Router.GET("/banner", app.getHandle.GetBannerByFilterHandler(s.Db))             // ОК http://localhost:8080/banner?admin_token=25&feature_id=15&tag_id=15&content=5&offset=0
+	s.Router.DELETE("/delete", app.postHandle.DeleteFeatureTagHandler(s.Db))          // ОК http://localhost:8080/delete?admin_token=25&feature_id=15 или http://localhost:8080/delete?admin_token=25&tag_id=15&content=1&offset=1
+	s.Router.GET("/history", app.getHandle.GetBannersHistoryHandler(s.Db))            // ОК http://localhost:8080/history?admin_token=25&id=15
+	s.Router.PATCH("/history", app.postHandle.ChangeBannersHistoryHandler(s.Db))      // OK http://localhost:8080/history?admin_token=25&id=15&number=8
 
 	if err := s.Router.Run(s.Cfg.Server.Port); err != nil {
 		log.Fatalf("Cannot listen. Error: {%s}", err)

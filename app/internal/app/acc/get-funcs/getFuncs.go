@@ -40,10 +40,10 @@ func (g *Get) GetBannerByFilter(db *sql.DB, token, feature, limit, offset, tag s
 	if err != nil {
 		return 400, filteredBanner, err
 	}
-	if avaliable == false {
+	if !avaliable {
 		return 401, filteredBanner, errors.New("unauthorized")
 	}
-	if adminState == false {
+	if !adminState {
 
 		return 403, filteredBanner, errors.New("unauthorized")
 	}
@@ -109,10 +109,10 @@ func (g *Get) GetBannersHistory(db *sql.DB, token, id string) (int, []models.His
 	if err != nil {
 		return 500, filteredBanner, errors.New("unauthorized")
 	}
-	if avaliable == false {
+	if !avaliable {
 		return 401, filteredBanner, errors.New("unauthorized")
 	}
-	if adminState == false {
+	if !adminState {
 		return 403, filteredBanner, errors.New("unauthorized")
 	}
 	err = getsql.GetBannerHistoryStorage(db, id, &filteredBanner)

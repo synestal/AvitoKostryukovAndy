@@ -7,10 +7,6 @@ import (
 	"github.com/lib/pq"
 )
 
-type BannerState struct {
-	state string
-}
-
 func GetBannerFromDB(db *sql.DB, tagID, featureID string) (*models.Banner, string, error) {
 	query := `
 		SELECT title_banner, text_banner, url_banner, banner_state
@@ -34,11 +30,6 @@ func GetBannerFromDB(db *sql.DB, tagID, featureID string) (*models.Banner, strin
 	}
 
 	return &banner, state, nil
-}
-
-type Admin struct {
-	avaliable string
-	admin     string
 }
 
 func GetAdminState(db *sql.DB, token string) (bool, bool, error) {

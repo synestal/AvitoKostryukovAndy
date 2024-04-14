@@ -44,7 +44,7 @@ func (p *GetF) GetBannerHandler(db *sql.DB, redisClient *redis.Client) gin.Handl
 		ctx := contextLogger.AppendCtx(context.Background(), slog.String("get banner handler", tagID+", "+featureID+", "+useLast+", "+token))
 		logger.InfoContext(ctx, "Starting handler")
 
-		if help.IsNumeric(tagID) == false || help.IsNumeric(featureID) == false || useLast != "false" && useLast != "true" || help.IsNumeric(token) == false {
+		if !help.IsNumeric(tagID) || !help.IsNumeric(featureID) || useLast != "false" && useLast != "true" || !help.IsNumeric(token) {
 			logger.ErrorContext(ctx, "Error in handler, err 400")
 			var errJSONResponse model.ErrJSONResponse
 			errJSONResponse.ErrorJSON = "400, некорректные данные"
@@ -74,14 +74,14 @@ func (p *GetF) GetBannerHandler(db *sql.DB, redisClient *redis.Client) gin.Handl
 				c.JSON(500, errJSONResponse)
 				return
 			}
-			if avaliable == false {
+			if !avaliable {
 				logger.ErrorContext(ctx, "Error in handler, err 401")
 				var errJSONResponse model.ErrJSONResponse
 				errJSONResponse.ErrorJSON = "401, пользователь не авторизован"
 				c.JSON(401, errJSONResponse)
 				return
 			}
-			if state == "false" && adminState == false {
+			if state == "false" && !adminState {
 				logger.ErrorContext(ctx, "Error in handler, err 403")
 				var errJSONResponse model.ErrJSONResponse
 				errJSONResponse.ErrorJSON = "403, пользователь не имеет доступа"
@@ -109,14 +109,14 @@ func (p *GetF) GetBannerHandler(db *sql.DB, redisClient *redis.Client) gin.Handl
 				c.JSON(500, errJSONResponse)
 				return
 			}
-			if avaliable == false {
+			if !avaliable {
 				logger.ErrorContext(ctx, "Error in handler, err 401")
 				var errJSONResponse model.ErrJSONResponse
 				errJSONResponse.ErrorJSON = "401, пользователь не авторизован"
 				c.JSON(401, errJSONResponse)
 				return
 			}
-			if state == "false" && adminState == false {
+			if state == "false" && !adminState {
 				logger.ErrorContext(ctx, "Error in handler, err 403")
 				var errJSONResponse model.ErrJSONResponse
 				errJSONResponse.ErrorJSON = "403, пользователь не имеет доступа"
@@ -149,7 +149,7 @@ func (p *GetF) GetBannerByFilterHandler(db *sql.DB) gin.HandlerFunc {
 		ctx := contextLogger.AppendCtx(context.Background(), slog.String("get banner by filter handler", token+", "+feature+", "+tag+", "+limit+", "+offset))
 		logger.InfoContext(ctx, "Starting handler")
 
-		if help.IsNumeric(token) == false || help.IsNumeric(feature) == false && help.IsNumeric(tag) == false {
+		if !help.IsNumeric(token) || !help.IsNumeric(feature) && help.IsNumeric(tag) {
 			logger.ErrorContext(ctx, "Error in handler, err 400")
 			var errJSONResponse model.ErrJSONResponse
 			errJSONResponse.ErrorJSON = "400, некорректные данные"
@@ -157,9 +157,6 @@ func (p *GetF) GetBannerByFilterHandler(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 		request, bannerList, err := p.gt.GetBannerByFilter(db, token, feature, limit, offset, tag)
-		if err != nil {
-
-		}
 		if len(bannerList) == 0 {
 			request = 404
 		}
@@ -177,7 +174,7 @@ func (p *GetF) GetBannersHistoryHandler(db *sql.DB) gin.HandlerFunc {
 		ctx := contextLogger.AppendCtx(context.Background(), slog.String("get banner history handler", token+", "+id))
 		logger.InfoContext(ctx, "Starting handler")
 
-		if help.IsNumeric(token) == false || help.IsNumeric(id) == false {
+		if !help.IsNumeric(token) || !help.IsNumeric(id) {
 			logger.ErrorContext(ctx, "Error in handler, err 400")
 			var errJSONResponse model.ErrJSONResponse
 			errJSONResponse.ErrorJSON = "400, некорректные данные"
@@ -185,9 +182,6 @@ func (p *GetF) GetBannersHistoryHandler(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 		request, bannerList, err := p.gt.GetBannersHistory(db, token, id)
-		if err != nil {
-
-		}
 		if len(bannerList) == 0 {
 			request = 404
 		}

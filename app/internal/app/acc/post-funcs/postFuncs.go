@@ -17,10 +17,10 @@ func (p *Post) CreateNewBanner(db *sql.DB, token, feature, active string, conten
 	if err != nil {
 		return 500, nil, err
 	}
-	if avaliable == false {
+	if !avaliable {
 		return 401, nil, err
 	}
-	if adminState == false {
+	if !adminState {
 		return 403, nil, err
 	}
 	bannerId, err := postsql.CreateNemBannerStorage(db, tags, feature, active, content)
@@ -36,10 +36,10 @@ func (p *Post) ChangeBanner(db *sql.DB, token, bannerid, feature, active string,
 	if err != nil {
 		return 500, err
 	}
-	if avaliable == false {
+	if !avaliable {
 		return 401, err
 	}
-	if adminState == false {
+	if !adminState {
 		return 403, err
 	}
 
@@ -58,10 +58,10 @@ func (p *Post) DeleteBanner(db *sql.DB, token, bannerid string) (int, error) {
 	if err != nil {
 		return 500, err
 	}
-	if avaliable == false {
+	if !avaliable {
 		return 401, err
 	}
-	if adminState == false {
+	if !adminState {
 		return 403, err
 	}
 
@@ -80,10 +80,10 @@ func (p *Post) DeleteBannerByFeatureOrTag(db *sql.DB, token, feature, limit, off
 	if err != nil {
 		return 500, err
 	}
-	if avaliable == false {
+	if !avaliable {
 		return 401, err
 	}
-	if adminState == false {
+	if !adminState {
 		return 403, err
 	}
 
@@ -113,10 +113,10 @@ func (p *Post) ChangeBannersHistory(db *sql.DB, token, number, id string) (int, 
 	if err != nil {
 		return 500, err
 	}
-	if avaliable == false {
+	if !avaliable {
 		return 401, err
 	}
-	if adminState == false {
+	if !adminState {
 		return 403, err
 	}
 

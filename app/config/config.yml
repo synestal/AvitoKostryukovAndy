@@ -5,7 +5,7 @@ Server:
   Timeout: 60s
 
 Postgres:
-  host: "localhost"
+  host: "db"
   port: "5432"
   user: "postgres"
   password: "Synesta17"
@@ -15,7 +15,7 @@ Postgres:
 
 
 Redis:
-  addr: "localhost:6379"
+  addr: "redis:6379"
   password: ""
   DB:       0
 

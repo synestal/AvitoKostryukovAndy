@@ -43,7 +43,7 @@ func (p *PostF) PostAdminStateHandler(db *sql.DB) gin.HandlerFunc { // POST: set
 		ctx := contextLogger.AppendCtx(context.Background(), slog.String("Post admin state handler", id+", "+state))
 		logger.InfoContext(ctx, "Starting handler")
 
-		if help.IsNumeric(id) == false || state != "true" && state != "false" {
+		if !help.IsNumeric(id) || state != "true" && state != "false" {
 			logger.ErrorContext(ctx, "Error in handler, err 400")
 			var errJSONResponse model.ErrJSONResponse
 			errJSONResponse.ErrorJSON = "400, некорректные данные"
@@ -51,9 +51,6 @@ func (p *PostF) PostAdminStateHandler(db *sql.DB) gin.HandlerFunc { // POST: set
 			return
 		}
 		request, err := p.pos.SetAdmin(db, id, state)
-		if err != nil {
-
-		}
 		jsonProducer.ProduceRequest(c, request, err, logger, ctx)
 	}
 }
@@ -74,7 +71,7 @@ func (p *PostF) CreateNewBannerHandler(db *sql.DB) gin.HandlerFunc {
 		ctx := contextLogger.AppendCtx(context.Background(), slog.String("Create new banner handler", token+", "+feature+", "+tags+", "+content+", "+active))
 		logger.InfoContext(ctx, "Starting handler")
 
-		if len(parsedTags) < 2 || help.IsNumeric(token) == false || help.IsNumeric(feature) == false || help.AllNumeric(parsedTags) == false || content == "" || active != "true" && active != "false" {
+		if len(parsedTags) < 2 || !help.IsNumeric(token) || !help.IsNumeric(feature) || !help.AllNumeric(parsedTags) || content == "" || active != "true" && active != "false" {
 			logger.ErrorContext(ctx, "Error in handler, err 400")
 			var errJSONResponse model.ErrJSONResponse
 			errJSONResponse.ErrorJSON = "400, некорректные данные"
@@ -82,9 +79,6 @@ func (p *PostF) CreateNewBannerHandler(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 		request, BannerId, err := p.pos.CreateNewBanner(db, token, feature, active, parsedContent, parsedTags)
-		if err != nil {
-
-		}
 		jsonProducer.ProduceJSON(c, request, BannerId, err, logger, ctx)
 	}
 }
@@ -105,7 +99,7 @@ func (p *PostF) ChangeBannerHandler(db *sql.DB) gin.HandlerFunc {
 		ctx := contextLogger.AppendCtx(context.Background(), slog.String("Change banner handler", token+", "+bannerid+", "+feature+", "+tags+", "+content+", "+active))
 		logger.InfoContext(ctx, "Starting handler")
 
-		if len(parsedTags) < 2 || help.IsNumeric(bannerid) == false || help.IsNumeric(token) == false || help.IsNumeric(feature) == false || help.AllNumeric(parsedTags) == false || content == "" || active != "true" && active != "false" {
+		if len(parsedTags) < 2 || !help.IsNumeric(bannerid) || !help.IsNumeric(token) || !help.IsNumeric(feature) || !help.AllNumeric(parsedTags) || content == "" || active != "true" && active != "false" {
 			logger.ErrorContext(ctx, "Error in handler, err 400")
 			var errJSONResponse model.ErrJSONResponse
 			errJSONResponse.ErrorJSON = "400, некорректные данные"
@@ -113,9 +107,6 @@ func (p *PostF) ChangeBannerHandler(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 		request, err := p.pos.ChangeBanner(db, token, bannerid, feature, active, parsedContent, parsedTags)
-		if err != nil {
-
-		}
 		jsonProducer.ProduceRequest(c, request, err, logger, ctx)
 	}
 }
@@ -130,7 +121,7 @@ func (p *PostF) DeleteBannerHandler(db *sql.DB) gin.HandlerFunc {
 		ctx := contextLogger.AppendCtx(context.Background(), slog.String("Delete banner handler", token+", "+bannerid))
 		logger.InfoContext(ctx, "Starting handler")
 
-		if help.IsNumeric(bannerid) == false || help.IsNumeric(token) == false {
+		if !help.IsNumeric(bannerid) || !help.IsNumeric(token) {
 			logger.ErrorContext(ctx, "Error in handler, err 400")
 			var errJSONResponse model.ErrJSONResponse
 			errJSONResponse.ErrorJSON = "400, некорректные данные"
@@ -138,9 +129,6 @@ func (p *PostF) DeleteBannerHandler(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 		request, err := p.pos.DeleteBanner(db, token, bannerid)
-		if err != nil {
-
-		}
 		jsonProducer.ProduceRequest(c, request, err, logger, ctx)
 	}
 }
@@ -158,7 +146,7 @@ func (p *PostF) DeleteFeatureTagHandler(db *sql.DB) gin.HandlerFunc {
 		ctx := contextLogger.AppendCtx(context.Background(), slog.String("Delete by feature and tag handler", token+", "+feature+", "+tag+", "+limit+", "+offset))
 		logger.InfoContext(ctx, "Starting handler")
 
-		if help.IsNumeric(token) == false || feature == "" && tag == "" {
+		if !help.IsNumeric(token) || feature == "" && tag == "" {
 			logger.ErrorContext(ctx, "Error in handler, err 400")
 			var errJSONResponse model.ErrJSONResponse
 			errJSONResponse.ErrorJSON = "400, некорректные данные"
@@ -184,7 +172,7 @@ func (p *PostF) ChangeBannersHistoryHandler(db *sql.DB) gin.HandlerFunc {
 		ctx := contextLogger.AppendCtx(context.Background(), slog.String("Change banners history handler", token+", "+id+", "+number))
 		logger.InfoContext(ctx, "Starting handler")
 
-		if help.IsNumeric(token) == false || help.IsNumeric(number) == false || help.IsNumeric(id) == false {
+		if !help.IsNumeric(token) || !help.IsNumeric(number) || !help.IsNumeric(id) {
 			logger.ErrorContext(ctx, "Error in handler, err 400")
 			var errJSONResponse model.ErrJSONResponse
 			errJSONResponse.ErrorJSON = "400, некорректные данные"
