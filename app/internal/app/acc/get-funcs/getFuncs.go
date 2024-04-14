@@ -38,7 +38,7 @@ func (g *Get) GetBannerByFilter(db *sql.DB, token, feature, limit, offset, tag s
 	filteredBanner := make([]models.FilteredBanner, 0, 1)
 	avaliable, adminState, err := g.GetAdminState(db, token)
 	if err != nil {
-		return 400, filteredBanner, err
+		return 500, filteredBanner, err
 	}
 	if !avaliable {
 		return 401, filteredBanner, errors.New("unauthorized")

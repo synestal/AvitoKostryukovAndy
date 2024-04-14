@@ -91,12 +91,12 @@ func (p *Post) DeleteBannerByFeatureOrTag(db *sql.DB, token, feature, limit, off
 	if tag == "" {
 		ids, err = getsql.GetBannerIdByFeature(db, feature, limit, offset)
 		if err != nil {
-			return 400, err
+			return 500, err
 		}
 	} else {
 		ids, err = getsql.GetBannerIdByTag(db, tag, limit, offset)
 		if err != nil {
-			return 400, err
+			return 500, err
 		}
 	}
 
